@@ -1,0 +1,636 @@
+<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>OMR Marketplace - Buy & Sell OMR Tokens</title><link rel=apple-touch-icon sizes=180x180 href=/apple-icon-180x180.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #d4ffd4;
+      font-family: 'IBM Plex Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Market Panel */
+
+    .market-panel {
+      background: rgba(10, 20, 10, 0.6);
+      border: 1px solid #2a4a2a;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Two Column Layout for Desktop */
+
+    .market-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: #2a4a2a;
+    }
+
+    @media (max-width: 1024px) {
+      .market-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Token Header */
+
+    .token-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #2a4a2a;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: rgba(15, 25, 15, 0.8);
+    }
+
+    .token-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .token-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #66bb66 0%, #4a9d4a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #000;
+      box-shadow: 0 4px 12px rgba(102, 187, 102, 0.3);
+    }
+
+    .token-details h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #66bb66;
+      margin-bottom: 2px;
+      text-shadow: 0 0 10px rgba(102, 187, 102, 0.5);
+    }
+
+    .token-ticker {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .price-section {
+      text-align: right;
+    }
+
+    .current-price {
+      font-size: 28px;
+      font-weight: 700;
+      color: #d4ffd4;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .price-unit {
+      font-size: 14px;
+      color: #888;
+      margin-left: 6px;
+    }
+
+    .price-usd {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .price-change {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .price-change.positive {
+      color: #66bb66;
+      background: rgba(102, 187, 102, 0.15);
+    }
+
+    .price-change.negative {
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.15);
+    }
+
+    /* Chart Section */
+
+    .chart-section {
+      padding: 16px;
+      background: rgba(5, 10, 5, 0.4);
+    }
+
+    .chart-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chart-type-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .chart-tab {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(20, 35, 20, 0.8);
+      color: #888;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'IBM Plex Mono', monospace;
+      border: 1px solid #2a4a2a;
+    }
+
+    .chart-tab.active {
+      background: linear-gradient(90deg, #f97316, #fb923c);
+      color: #000;
+      border-color: #f97316;
+    }
+
+    .chart-tab:hover:not(.active) {
+      background: rgba(30, 50, 30, 0.8);
+      border-color: #66bb66;
+    }
+
+    .time-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .time-tab {
+      padding: 4px 10px;
+      border: 1px solid #2a4a2a;
+      border-radius: 6px;
+      background: transparent;
+      color: #888;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .time-tab.active {
+      background: linear-gradient(90deg, #f97316, #fb923c);
+      border-color: #f97316;
+      color: #000;
+    }
+
+    .chart-container {
+      height: 200px;
+      background: rgba(5, 10, 5, 0.6);
+      border-radius: 8px;
+      border: 1px solid #2a4a2a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #priceChart {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Stats Grid */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 16px;
+      background: rgba(5, 10, 5, 0.4);
+    }
+
+    .stat-card {
+      background: rgba(20, 35, 20, 0.8);
+      border: 1px solid #2a4a2a;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #66bb66;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #d4ffd4;
+    }
+
+    .stat-subvalue {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    /* Listings Section */
+
+    .listings-section {
+      background: rgba(10, 20, 10, 0.6);
+      border: 1px solid #2a4a2a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .listings-tabs {
+      display: flex;
+      border-bottom: 2px solid #2a4a2a;
+      padding: 0 20px;
+      background: rgba(15, 25, 15, 0.8);
+    }
+
+    .listing-tab {
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      color: #888;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .listing-tab.active {
+      color: #f97316;
+    }
+
+    .listing-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f97316, #fb923c);
+    }
+
+    .listings-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: rgba(10, 15, 10, 0.6);
+    }
+
+    .sort-dropdown {
+      padding: 10px 16px;
+      background: rgba(20, 35, 20, 0.8);
+      border: 1px solid #2a4a2a;
+      border-radius: 8px;
+      color: #d4ffd4;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      outline: none;
+    }
+
+    .sort-dropdown:hover {
+      border-color: #66bb66;
+    }
+
+    .listings-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-action {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'IBM Plex Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-list {
+      background: linear-gradient(90deg, #f97316, #fb923c);
+      color: #000;
+      border: none;
+    }
+
+    .btn-list:hover {
+      filter: brightness(1.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-refresh {
+      background: rgba(20, 35, 20, 0.8);
+      color: #d4ffd4;
+      border: 1px solid #2a4a2a;
+    }
+
+    .btn-refresh:hover {
+      background: rgba(30, 50, 30, 0.8);
+      border-color: #66bb66;
+    }
+
+    /* Listings Grid */
+
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      padding: 24px;
+      min-height: 400px;
+      background: rgba(5, 10, 5, 0.4);
+    }
+
+    /* Listing Card */
+
+    .listing-card {
+      background: rgba(20, 35, 20, 0.8);
+      border: 1px solid #2a4a2a;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-4px);
+      border-color: #66bb66;
+      box-shadow: 0 8px 24px rgba(102, 187, 102, 0.3);
+    }
+
+    .card-token {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .card-amount {
+      font-size: 28px;
+      font-weight: 700;
+      color: #d4ffd4;
+      margin-bottom: 12px;
+    }
+
+    .card-price {
+      font-size: 18px;
+      font-weight: 600;
+      color: #66bb66;
+      margin-bottom: 4px;
+    }
+
+    .card-price-unit {
+      font-size: 14px;
+      color: #888;
+    }
+
+    .card-usd {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .card-seller {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-top: 1px solid #2a4a2a;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .card-sats {
+      color: #888;
+    }
+
+    .card-sats-value {
+      color: #d4ffd4;
+      font-weight: 600;
+    }
+
+    .card-btc {
+      color: #666;
+    }
+
+    .btn-buy {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #f97316, #fb923c);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'IBM Plex Mono', monospace;
+      box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+    }
+
+    .btn-buy:hover {
+      filter: brightness(1.15);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.5);
+    }
+
+    /* Swap Button */
+
+    .swap-button {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+      border: none;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: 700;
+      z-index: 100;
+    }
+
+    .swap-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(249, 115, 22, 0.6);
+    }
+
+    .swap-price {
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .swap-value {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    /* Loading */
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+      color: #66bb66;
+      font-size: 14px;
+    }
+
+    /* Mobile Responsive */
+
+    @media (max-width: 1024px) {
+      .market-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 12px;
+      }
+
+      .token-header {
+        padding: 12px 16px;
+      }
+
+      .token-details h1 {
+        font-size: 18px;
+      }
+
+      .current-price {
+        font-size: 24px;
+      }
+
+      .chart-section {
+        padding: 12px;
+      }
+
+      .chart-container {
+        height: 180px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 12px;
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 10px;
+      }
+
+      .listings-tabs {
+        padding: 0 16px;
+      }
+
+      .listing-tab {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+
+      .listings-controls {
+        padding: 12px 16px;
+      }
+
+      .listings-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        padding: 16px;
+        gap: 12px;
+      }
+
+      .listing-card {
+        padding: 16px;
+      }
+
+      .card-amount {
+        font-size: 22px;
+      }
+
+      .swap-button {
+        width: 64px;
+        height: 64px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 11px;
+      }
+      
+      .swap-price {
+        font-size: 9px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .listings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .chart-type-tabs,
+      .time-tabs {
+        justify-content: center;
+      }
+    }</style><script type=module crossorigin src=/assets/book-DZny98c8.js></script><link rel=modulepreload crossorigin href=/assets/bitcoin-CpxUx-D2.js><link rel=modulepreload crossorigin href=/assets/bitcoin-utils-DDv8QE7C.js><link rel=stylesheet crossorigin href=/assets/others-Cm95G3cA.css></head><body><nav class=navbar><div class=nav-left><div class=nav-logo><img src=/assets/logo-cQj4ZBYo.jpg alt="OMR Logo"></div><span class=nav-title>OMR MARKETPLACE</span></div><div class=nav-right><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 14px; color: #ccc; font-weight: 600; text-transform: uppercase;">Block</span> <span id=currentBlock>0</span></div><button id=btnConnect class=btn-connect>Connect Wallet</button></div></nav><div class=subnav><div class=subnav-container><div class=subnav-tabs><a href=/ class=subnav-btn>OMR Staking Zone</a> <a href=/others class=subnav-btn>Ecosystem Upliftment</a> <a href=/claim class=subnav-btn>Claim</a> <a href=/book class="subnav-btn active">Marketplace</a></div><div class=subnav-wallet-status><div class=wallet-status-text><span class=wallet-status-label>💼 Wallet Status</span> <span id=statusText class=wallet-status-value>🔌 Wallet not connected</span></div><div class=subnav-actions><button id=btnConnectPanel class=btn-compact>🔗 Connect</button> <button id=btnLogout class="btn-compact btn-logout" style=display:none;>🚪 Logout</button></div></div></div></div><main><!-- Market Panel --><div class=market-panel><!-- Token Header --><div class=token-header><div class=token-info><div class=token-logo>Ⓡ</div><div class=token-details><h1 id=tokenName>OMR Token</h1><div class=token-ticker id=tokenTicker>OMR (Rune)</div></div></div><div class=price-section><div><span class=current-price id=currentPrice>1.2</span> <span class=price-unit>sats/OMR</span></div><div class=price-usd id=priceUsd>$0.0012</div><span class="price-change positive" id=priceChange>+15.00%</span></div></div><!-- Two Column Content --><div class=market-content><!-- Left Column: Chart --><div class=chart-section><div class=chart-controls><div class=chart-type-tabs><button class="chart-tab active" data-type=candles>Candles</button> <button class=chart-tab data-type=line>Line</button></div><div class=time-tabs><button class="time-tab active" data-period=24h>24h</button> <button class=time-tab data-period=7d>7d</button> <button class=time-tab data-period=30d>30d</button></div></div><div class=chart-container><canvas id=priceChart></canvas></div></div><!-- Right Column: Stats --><div class=stats-grid><div class=stat-card><div class=stat-label>Market Cap</div><div class=stat-value id=marketCap>Loading...</div><div class=stat-subvalue id=marketCapUsd>--</div></div><div class=stat-card><div class=stat-label>24h Volume</div><div class=stat-value id=volume24h>Loading...</div><div class=stat-subvalue id=volume24hUsd>--</div></div><div class=stat-card><div class=stat-label>Floor Price</div><div class=stat-value id=floorPrice>--</div></div><div class=stat-card><div class=stat-label>Holders</div><div class=stat-value id=holders>--</div></div><div class=stat-card><div class=stat-label>Total Supply</div><div class=stat-value id=totalSupply>--</div></div><div class=stat-card><div class=stat-label>Total Trades</div><div class=stat-value id=totalTrades>--</div></div></div></div></div><!-- Listings Section --><div class=listings-section><div class=listings-tabs><button class="listing-tab active" id=tabListed>Listed</button> <button class=listing-tab id=tabRecords>Order Records</button> <button class=listing-tab id=tabMyOrders>My Orders</button></div><div class=listings-controls><select class=sort-dropdown id=sortDropdown><option value=price-low>Price: Low to High</option><option value=price-high>Price: High to Low</option><option value=amount-low>Amount: Low to High</option><option value=amount-high>Amount: High to Low</option><option value=newest>Newest First</option></select><div class=listings-actions><button class="btn-action btn-list">⊕ List</button> <button class="btn-action btn-refresh">↻ Refresh</button></div></div><div class=listings-grid id=listingsGrid><div class=loading>Loading listings...</div></div></div><!-- Floating Swap Button --> <button class=swap-button id=swapButton>SWAP<div class=swap-price>0.77 sats</div><div class=swap-value>$0.000797</div></button></main></body></html>

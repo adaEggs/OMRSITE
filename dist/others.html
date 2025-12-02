@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>OMR Staking - Bitcoin NFT Timelock Protocol | Stake Your Ordinals</title><meta name=title content="OMR Staking - Bitcoin NFT Timelock Protocol | Stake Your Ordinals"><meta name=description content="Stake your Bitcoin Ordinals with OMR Staking Protocol. Secure timelock staking for Bitcoin NFTs with transparent rewards and decentralized security. Connect your wallet and start earning today."><meta name=keywords content="Bitcoin staking, Ordinals staking, Bitcoin NFT, OMR token, timelock protocol, Bitcoin DeFi, Ordinals marketplace, cryptocurrency staking, BTC rewards, blockchain staking"><meta name=author content="OMR Staking Protocol"><meta name=robots content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta name=language content=English><meta name=revisit-after content="7 days"><style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Press+Start+2P&display=swap');
+
+  /* --- FIX: prevent top panels from cutting off NFT grid --- */
+
+  @media (max-width: 490px) {
+
+    /* --- FIX: Prevent leaderboard clipping --- */
+
+.panel {width:380px !important;}
+
+.data-grid {
+  overflow: visible;
+}
+    body, html {
+      height: auto;
+      overflow-y: auto;
+    }
+
+    main {
+      margin-top: 0;
+      padding: 12px 8px 100px 8px;
+    }
+
+    .subnav {
+      position: relative;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .subnav-container {
+      max-height: none;
+      overflow: visible;
+    }
+
+    .subnav-wallet-status {
+      margin-top: 8px;
+    }
+
+    .subnav-btn {
+      padding: 10px 8px;
+      font-size: 13px;
+    }
+
+    .subnav-wallet-status {
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .wallet-status-text span {
+      font-size: 13px !important;
+    }
+
+    #inscriptionPanel {
+      margin-top: 12px;
+    }
+
+    .inscription-grid {
+      margin-top: 8px;
+    }
+
+    .inscription-grid img {
+      max-width: 110px;
+      height: auto;
+      border-radius: 5px;
+    }
+  }
+
+  /* --- NEW: Responsive Data Cards --- */
+
+  .data-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .data-card {
+    background: rgba(10, 20, 10, 0.6);
+    border: 1px solid #2a4a2a;
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #d4ffd4;
+    font-family: 'IBM Plex Mono', monospace;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 6px 14px;
+  }
+
+  .data-card span {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .data-card strong {
+    display: block;
+    color: #80ff80;
+    font-size: 13px;
+    text-shadow: 0 0 6px rgba(100, 255, 100, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .data-card {
+      grid-template-columns: 1fr 1fr;
+      padding: 10px;
+    }
+    .data-card span,
+    .data-card strong {
+      font-size: 12px;
+    }
+  }
+
+  /* Leaderboard Card Variants */
+
+  .leader-total {
+    font-size: 18px;
+    color: #aaffaa;
+    margin-bottom: 14px;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 8px rgba(80, 255, 80, 0.4);
+  }
+
+  .data-card.rank-1 {
+    border-color: gold;
+    box-shadow: 0 0 8px gold;
+  }
+
+  .data-card.rank-2 {
+    border-color: silver;
+    box-shadow: 0 0 8px silver;
+  }
+
+  .data-card.rank-3 {
+    border-color: #cd7f32;
+    box-shadow: 0 0 8px #cd7f32;
+  }</style><script type=module crossorigin src=/assets/others-BH1cafp5.js></script><link rel=modulepreload crossorigin href=/assets/bitcoin-CpxUx-D2.js><link rel=modulepreload crossorigin href=/assets/bitcoin-utils-DDv8QE7C.js><link rel=modulepreload crossorigin href=/assets/notification-DTttb5yl.js><link rel=stylesheet crossorigin href=/assets/others-Cm95G3cA.css></head><body><!-- Main Navigation Bar --><nav class=navbar><div class=nav-left><div class=nav-logo><img src=/assets/logo-cQj4ZBYo.jpg alt="Rat Logo"></div><span class=nav-title>STAKING</span></div><div class=nav-right><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 14px; color: #cccccc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Courier New', monospace;">Block</span> <span id=currentBlock style="position: relative;">0 <span style="position: absolute; top: -4px; right: -4px; width: 8px; height: 8px; background: #4a7a4a; border-radius: 50%; box-shadow: 0 0 10px #5a9a5a; animation: pulse 2s infinite;"></span></span></div><button id=btnConnect class=btn-connect>Connect Wallet</button></div></nav><!-- Sub Navigation with Wallet Status --><div class=subnav><div class=subnav-container><div class=subnav-tabs><a href=/ id=navStakeOMR class=subnav-btn>OMR Staking Zone </a><a href=/others id=navStakeNFT class="subnav-btn active">Ecosystem Upliftment </a><a href=/claim class=subnav-btn>Claim</a></div><div class=subnav-wallet-status><div class=wallet-status-text><span class=wallet-status-label>💼 Wallet Status</span> <span id=statusText class=wallet-status-value>🔌 Not Connected</span></div><div class=subnav-actions><button id=btnConnectPanel class=btn-compact>🔗 Connect</button> <button id=btnLogout class="btn-compact btn-logout" style="display: none;">🚪 Logout</button></div></div></div></div><main class=dashboard-layout><!-- MAIN GRID LAYOUT --><div class=main-grid><!-- LEFT COLUMN --><div class=left-column><div id=timelockPanel class="panel hidden"><div style="background: rgba(30,60,30,0.15); border: 1px solid #2a4a2a; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: inset 0 0 15px rgba(0,0,0,0.4);"><h2 style="margin: 0 0 6px 0; font-size: 24px; color: #66bb66; text-shadow: 0 0 10px rgba(80,255,80,0.5);">⚙️ Stake Setup</h2><p class=hint style="margin: 0; font-size: 14px; color: #cccccc;">Configure your timelock parameters below</p></div><!-- Lock Duration Section --><div style="margin-bottom: 16px;"><label style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;"><span style="display: flex; align-items: center; gap: 6px; color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 14px;">🔒 <span>Lock Duration</span> </span><span class=hint style="margin: 0; font-size: 13px; color: #cccccc;">~144 blocks/day</span></label> <select id=durationSelect class=input style="width: 100%; height: 48px; margin: 0 0 12px 0; font-size: 16px; cursor: pointer;"><option value="">Select duration</option><option value=1>⏱️ 1 Day</option><option value=3>🕐 3 Days</option><option value=7>⚡ 1 Week</option><option value=14>⚡ 2 Weeks</option><option value=30>📅 1 Month</option><option value=90>🔥 3 Months</option><option value=180>💎 6 Months</option><option value=365>🚀 1 Year</option></select><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"><div><label style="margin-bottom: 6px; font-size: 13px; color: #e0e0e0; font-family: 'Courier New', monospace;">📅 End Date</label> <input id=lockDate type=date class=input readonly=readonly style="width: 100%; height: 48px; margin: 0; font-size: 15px;"></div><div><label style="margin-bottom: 6px; font-size: 13px; color: #e0e0e0; font-family: 'Courier New', monospace;">🔢 Block Height</label> <input id=lockHeightInput type=number class=input placeholder=Auto readonly=readonly style="width: 100%; height: 48px; margin: 0; font-size: 15px; cursor: not-allowed; opacity: 0.8;"></div></div><div style="background: rgba(30,60,30,0.15); border: 1px solid #2a4a2a; border-radius: 6px; padding: 12px; margin-top: 12px; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,0.3);"><span style="font-size: 20px;">⏱</span> <span class=hint style="margin: 0; font-size: 14px; line-height: 1.4; color: #cccccc;">Live Bitcoin data refreshes every 15s</span></div></div><div style="margin-bottom: 16px;"><label style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;"><span style="display: flex; align-items: center; gap: 6px; color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 14px;">⚡ <span>Spark Wallet Address</span> </span><span class=hint style="margin: 0; font-size: 13px; color: #cccccc;">Required</span></label> <input id=airdropAddress type=text class=input placeholder="Enter your Spark wallet address" required style="width: 100%; height: 48px; font-size: 15px; padding: 0 12px; border: 1px solid #2a4a2a; border-radius: 6px;"><p class=hint style="margin: 8px 0 0 0; font-size: 13px; color: #aaffaa; text-shadow: 0 0 6px rgba(80,255,80,0.3);">This Spark wallet will receive your staking airdrops.</p></div><!-- Fee Rate Section --><div style="margin-bottom: 16px;"><label style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;"><span style="display: flex; align-items: center; gap: 6px; color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 14px;">⚡ <span>Fee Rate</span> </span><span class=hint style="margin: 0; font-size: 13px; color: #cccccc;">Higher = faster</span></label><div style="position: relative;"><input id=feeRate type=number value=1 min=1 class=input style="width: 100%; height: 48px; margin: 0; font-size: 16px; padding-right: 80px;"> <span style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #66bb66; font-weight: 700; font-size: 14px; letter-spacing: 0.05em; font-family: 'Courier New', monospace; text-shadow: 0 0 6px rgba(80,255,80,0.3);">sats/vB</span></div></div><!-- Action Buttons --> <button id=btnTimelock class="btn-primary w-full hidden" style="width: 100%; height: 56px; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px;">🔒 Create Stake (Unisat)</button> <button id=btnTimelockXverse class="timelock-btn hidden" style="width: 100%; height: 56px; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px;">🔒 Create Stake (Xverse)</button><!-- Estimate Box --><div id=estimateBox class=hidden style="margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(249,115,22,0.3);
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);"><!-- Transaction Fee --><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-size: 12px; color: #a1a1aa; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">💰 Network Fee </span><span id=estFee style="color: #fb923c;font-size: 15px;">0 sats</span></div><!-- Redeem Buffer --><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-size: 12px; color: #a1a1aa; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">🔄 Redeem Buffer </span><span id=estRedeem style="color: #fb923c;  font-size: 14px;">0 sats</span></div><!-- Marketplace Fee --><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-size: 12px; color: #a1a1aa; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Fee lock / unlock </span><span id=estMarket style="color: #fb923c;  font-size: 14px;">0 sats</span></div><!-- Divider --><div style="border-top: 1px solid rgba(249,115,22,0.2); margin-top: 10px; margin-bottom: 10px;"></div><!-- Total --><div style="display: flex; justify-content: space-between; align-items: center;"><span id=estTotal style=display:none>0 sats</span></div><!-- Divider --><div style="border-top: 1px solid rgba(249,115,22,0.2); margin-top: 14px; margin-bottom: 14px;"></div><!-- Timelock Address --></div></div><div id=lockedListPanel class="panel hidden"><h2>🔐 Active Stakes</h2><div style="overflow-x: auto; max-height: 500px; overflow-y: auto;"><table class="locked-table w-full"><thead><tr><th>TX</th><th>NFTs</th><th>Unlock Block</th><th>Lock Days</th><th>Status</th><th>Power</th><th>Date</th></tr></thead><tbody id=lockedListBody></tbody></table></div></div></div><!-- RIGHT COLUMN --><div class=right-column><div id=inscriptionPanel class="panel hidden"><h2 style="color: #66bb66; text-shadow: 0 0 10px rgba(80,255,80,0.5); font-size: 24px; margin-bottom: 16px;">🖼️ Your NFTs</h2><span id=selectedSection class=hidden style="color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 15px;">🎯 Selected for Staking (<span id=selectedCount>0</span>) — max 5 per tx</span><div id=inscriptionCount class=inscription-count style="background: rgba(30,60,30,0.15); padding: 14px; border-radius: 8px; margin-top: 12px; border: 1px solid #2a4a2a; box-shadow: inset 0 0 10px rgba(0,0,0,0.3); font-size: 15px;"></div><div id=inscriptionGrid class=inscription-grid></div><div id=leaderboardPanel><h2 style="color: #66bb66; text-shadow: 0 0 10px rgba(80,255,80,0.5); font-size: 24px; margin-bottom: 16px;">🏆 Staking Leaderboard</h2><div id=totalPower style="font-size: 18px; color: #aaffaa; margin-bottom: 14px; font-family: 'Courier New', monospace; text-shadow: 0 0 8px rgba(80,255,80,0.4);">Loading...</div><div id=leaderboardScroll style="max-height: 420px;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #2a4a2a;
+  border-radius: 6px;
+  margin-top: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #3a5a3a transparent;
+  background: rgba(0,0,0,0.4);
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.6);"><table id=leaderboardTable class="w-full text-left" style="border-collapse: collapse; width: 100%;"><thead><tr style="border-bottom: 1px solid #2a4a2a; color: #66bb66;"><th style="padding: 12px; color: #66bb66; text-shadow: 0 0 6px rgba(80,255,80,0.3); font-size: 14px;">Rank</th><th style="padding: 12px; color: #66bb66; text-shadow: 0 0 6px rgba(80,255,80,0.3); font-size: 14px;">Wallet</th><th style="padding: 12px; color: #66bb66; text-shadow: 0 0 6px rgba(80,255,80,0.3); font-size: 14px;">NFTs</th><th style="padding: 12px; color: #66bb66; text-shadow: 0 0 6px rgba(80,255,80,0.3); font-size: 14px;">Tier</th><th style="padding: 12px; color: #66bb66; text-shadow: 0 0 6px rgba(80,255,80,0.3); font-size: 14px;">Daily</th><th style="padding: 12px; color: #66bb66; text-shadow: 0 0 6px rgba(80,255,80,0.3); font-size: 14px;">Total</th></tr></thead><tbody id=leaderboardBody></tbody></table></div></div></div></div></div></main><script async data-id=101488421 src=//static.getclicky.com/js></script></body></html>
